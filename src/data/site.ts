@@ -1,21 +1,17 @@
-// All site copy lives here. Edit this file to update projects, availability or links;
-// no component changes are needed.
+const env = import.meta.env
 
 export const profile = {
-  name: import.meta.env.VITE_PROFILE_NAME,
+  name: env.VITE_PROFILE_NAME,
   role: 'Full-stack software engineer',
-  email: import.meta.env.VITE_CONTACT_EMAIL,
-  whatsapp: import.meta.env.VITE_WHATSAPP_URL,
-  phoneDisplay: import.meta.env.VITE_PHONE_DISPLAY,
-  linkedin: import.meta.env.VITE_LINKEDIN_URL,
-  linkedinDisplay: import.meta.env.VITE_LINKEDIN_DISPLAY,
-  github: import.meta.env.VITE_GITHUB_URL,
-  githubDisplay: import.meta.env.VITE_GITHUB_DISPLAY,
-  // Drop the PDF into /public and set this to '/Eman-Serat-CV.pdf' to show the "Download CV" button.
+  email: env.VITE_CONTACT_EMAIL,
+  whatsapp: env.VITE_WHATSAPP_URL,
+  phoneDisplay: env.VITE_PHONE_DISPLAY,
+  linkedin: env.VITE_LINKEDIN_URL,
+  linkedinDisplay: env.VITE_LINKEDIN_DISPLAY,
+  github: env.VITE_GITHUB_URL,
+  githubDisplay: env.VITE_GITHUB_DISPLAY,
   cvUrl: null as string | null,
-  // Set to a Calendly / Cal.com link to show a "Book a call" button.
   calUrl: null as string | null,
-  // Shown next to the status dot in the hero and contact section.
   availability: 'Available for new projects',
   yearsExperience: '3+',
 }
@@ -26,7 +22,6 @@ export const hero = {
     'For 3+ years I’ve shipped legal platforms, AI voice and chat agents, e-commerce and real-time systems. I take products from first schema to production, on my own or alongside your team.',
 }
 
-// The engineering proof shown directly under the hero.
 export const proof = [
   {
     title: 'Legal platforms',
