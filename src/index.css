@@ -1,0 +1,175 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+:root {
+  color-scheme: dark;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(5rem + env(safe-area-inset-top, 0px));
+  -webkit-text-size-adjust: 100%;
+  background-color: #07080a;
+}
+
+body {
+  background-color: #07080a;
+  color: #ededef;
+  font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Warm spotlight pinned to the top of the page, fading into the base */
+.ambient {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 70rem;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(48rem 30rem at 50% -8rem, rgba(230, 197, 148, 0.11), transparent 70%),
+    radial-gradient(80rem 40rem at 50% -14rem, rgba(230, 197, 148, 0.04), transparent 70%);
+}
+.ambient::after {
+  /* Fine grain so the gradient doesn't band on cheap displays */
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mask-image: linear-gradient(to bottom, black, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+::selection {
+  background: rgba(230, 197, 148, 0.28);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid #e6c594;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-page px-5 sm:px-8 lg:px-12;
+  }
+
+  .section {
+    @apply relative py-32 lg:py-48;
+  }
+
+  /* Text link with an underline that draws in from the left */
+  .link {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 300ms cubic-bezier(0.2, 0.7, 0.2, 1), color 200ms ease-out;
+  }
+  .link:hover {
+    background-size: 100% 1px;
+  }
+
+  .btn {
+    @apply inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-full px-6 text-[0.9375rem] font-medium;
+    transition: all 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+  .btn-primary {
+    @apply bg-gold text-canvas;
+    box-shadow: 0 0 0 0 rgba(230, 197, 148, 0);
+  }
+  .btn-primary:hover {
+    background-color: #efd4ab;
+    box-shadow: 0 10px 40px -12px rgba(230, 197, 148, 0.55);
+  }
+  .btn-ghost {
+    @apply border border-line-strong text-ink;
+  }
+  .btn-ghost:hover {
+    @apply border-white/25 bg-white/[0.03];
+  }
+
+  .tag {
+    @apply inline-flex items-center rounded-full border border-line px-2.5 py-1 font-mono text-[0.6875rem] leading-none text-muted;
+  }
+
+  .section-title {
+    @apply text-[2.25rem] font-semibold leading-[1.05] tracking-[-0.035em] text-ink sm:text-[3rem] lg:text-[3.5rem];
+  }
+
+  .field {
+    @apply h-12 w-full rounded-xl border border-line-strong bg-white/[0.02] px-4 text-[0.9375rem] text-ink placeholder:text-faint;
+    transition: border-color 300ms ease-out, background-color 300ms ease-out;
+  }
+  .field:focus {
+    @apply border-white/30 bg-white/[0.04] outline-none;
+  }
+}
+
+/* The one orchestrated moment: the hero assembles on load */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  opacity: 0;
+  animation: rise 900ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+/* Native <dialog> styling for the inquiry and case study panels */
+dialog {
+  color: inherit;
+}
+dialog::backdrop {
+  background: rgba(4, 5, 6, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+dialog[open] {
+  animation: dialog-in 350ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .rise {
+    opacity: 1;
+    animation: none;
+  }
+  dialog[open] {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
